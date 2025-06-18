@@ -3,10 +3,12 @@ package PruebaUnitariaMetodos;
 import org.example.ejercicios.Metodos;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestMetodos {
 
@@ -38,6 +40,23 @@ public class TestMetodos {
         assertEquals(3, resultado.get("hola"));
         assertEquals(2, resultado.get("java"));
         assertEquals(2, resultado.get("mundo"));
+    }
+
+    @Test
+    void testAgruparPorLongitud(){
+        Metodos metodos = new Metodos();
+        List<String> entrada = Arrays.asList("hola", "adiós", "sol", "luz", "día", "mañana");
+
+        Map<Integer, List<String>> resultado = metodos.agruparPorLongitud(entrada);
+
+        assertEquals(3, resultado.get(3).size());
+        assertTrue(resultado.get(3).containsAll(Arrays.asList("sol", "luz", "día")));
+
+        assertEquals(Arrays.asList("hola"), resultado.get(4));
+        assertEquals(Arrays.asList("adiós"), resultado.get(5));
+        assertEquals(Arrays.asList("mañana"), resultado.get(6));
+
+        assertEquals(4, resultado.size()); // 3, 4, 5, 6
     }
 
 
