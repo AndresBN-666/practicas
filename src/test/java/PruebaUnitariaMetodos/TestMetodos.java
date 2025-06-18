@@ -1,5 +1,6 @@
 package PruebaUnitariaMetodos;
 
+import org.example.ejercicios.Compra;
 import org.example.ejercicios.Metodos;
 import org.junit.jupiter.api.Test;
 
@@ -59,5 +60,57 @@ public class TestMetodos {
         assertEquals(4, resultado.size()); // 3, 4, 5 y 6
     }
 
+    @Test
+    void TestAnagramas(){
+        Metodos metodos = new Metodos();
+        List<String> palabras = Arrays.asList("roma", "amor", "mora", "ramo", "mar", "ram", "casa");
+
+        Map<String,List<String>> resultado = metodos.agruparPorAnagramas2(palabras);
+
+        assertEquals(3, resultado.size());
+        boolean grupoEncontrado = resultado.values().stream()
+                .anyMatch(lista -> lista.containsAll(Arrays.asList("roma", "amor", "mora", "ramo"))
+                && lista.size() == 4);
+        assertTrue(grupoEncontrado);
+    }
+
+    @Test
+    void testAgruparPorCriterios(){
+        Metodos metodos = new Metodos();
+        List<String> palabras = Arrays.asList("Casa", "cielo", "Sol", "sombra", "perro", "Pan");
+
+        Map<Character, List<String>> resultado = metodos.agruparPorPrimerCaracter(palabras);
+
+        assertEquals(3, resultado.size());
+
+        assertTrue(resultado.containsKey('c'));
+        assertEquals(Arrays.asList("Casa", "cielo"), resultado.get('c'));
+
+        assertTrue(resultado.containsKey('s'));
+        assertEquals(Arrays.asList("Sol", "sombra"), resultado.get('s'));
+
+        assertTrue(resultado.containsKey('p'));
+        assertEquals(Arrays.asList("perro", "Pan"), resultado.get('p'));
+    }
+
+    @Test
+    void testCalcularGastosPorProductos(){
+        Metodos metodos = new Metodos();
+        List<Compra> compras = Arrays.asList(
+                new Compra("pan", 1.5),
+                new Compra("leche", 2.0),
+                new Compra("pan", 1.2),
+                new Compra("huevos", 3.0),
+                new Compra("leche", 1.8)
+        );
+
+        Map<String, Double> resultado = metodos.calcularGastosPorProductos(compras);
+
+        assertEquals(3, resultado.size());
+        assertEquals(2.7, resultado.get("pan"), 0.001);
+        assertEquals(3.8, resultado.get("leche"), 0.001);
+        assertEquals(3.0, resultado.get("huevos"), 0.001);
+
+    }
 
 }

@@ -91,4 +91,75 @@ public class Metodos {
         return map;
     }
 
+    // Agrupar anagramas con containsKey
+    public Map<String,List<String>> agruparAnagramas(List<String> lista){
+        Map<String,List<String>> map = new HashMap<>();
+
+        for (String palabra : lista) {
+            char[] letras = palabra.toCharArray();
+            Arrays.sort(letras);
+            String clave = new String(letras);
+            if (!map.containsKey(clave)) {
+                map.put(clave, new ArrayList<>());
+            }
+            map.get(clave).add(palabra);
+
+        }
+
+        return map;
+
+    }
+
+    // Agrupar anagramas con computeIfAbsent
+    public Map<String, List<String>> agruparPorAnagramas2(List<String> lista){
+        Map<String, List<String>> map = new HashMap<>();
+        for (String palabra : lista) {
+            char[] letras = palabra.toCharArray();
+            Arrays.sort(letras);
+            String clave = new String(letras);
+
+            map.computeIfAbsent(clave, k -> new ArrayList<>()).add(palabra);
+        }
+        return map;
+    }
+
+    // Metodo para agrupar lista de palabras por primer caracter
+    public Map<Character,List<String>> agruparPorPrimerCaracter(List<String> lista){
+        Map<Character, List<String>> mapa =  new HashMap<>();
+
+        for (String palabra : lista) {
+            char caracter = Character.toLowerCase(palabra.charAt(0));
+
+            mapa.computeIfAbsent(caracter, k -> new ArrayList<>()).add(palabra);
+        }
+        return mapa;
+
+    }
+
+    // Metodo para calcular precios por productos
+    public Map<String,Double> calcularGastosPorProductos(List<Compra> compras){
+        Map<String,Double> mapa = new HashMap<>();
+        for (Compra compra : compras){
+            mapa.merge(compra.getNombre(), compra.getPrecio(), Double::sum);
+        }
+        return mapa;
+    }
+
+    public Map<String, Double> calcularMontoPorProductos(List<Compra> compras){
+        Map<String,Double> mapa = new HashMap<>();
+        for (Compra compra : compras){
+            String producto = compra.getNombre();
+            double precio = compra.getPrecio();
+
+            if (mapa.containsKey(producto)){
+                double totalActual = mapa.get(producto);
+                mapa.put(producto, totalActual + precio);
+            }else {
+                mapa.put(producto, precio);
+            }
+        }
+        return mapa;
+    }
+
 }
+
