@@ -56,7 +56,7 @@ public class TestMetodos {
         assertEquals(Arrays.asList("adiós"), resultado.get(5));
         assertEquals(Arrays.asList("mañana"), resultado.get(6));
 
-        assertEquals(4, resultado.size()); // 3, 4, 5, 6
+        assertEquals(4, resultado.size()); // 3, 4, 5 y 6
     }
 
 
