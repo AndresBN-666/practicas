@@ -15,8 +15,15 @@ public class PrincipalEjercicios {
                 new Compra("huevos", 3.0),
                 new Compra("leche", 1.8)
         );
+        List<Usuario> usuario = List.of(
+                new Usuario("Ana", 15),
+                new Usuario("Luis", 25),
+                new Usuario("Pedro", 65),
+                new Usuario("Sofia", 12),
+                new Usuario("Carmen", 70)
+        );
 
-        System.out.println(metodos.calcularMontoPorProductos(compras));
+        System.out.println(metodos.agruparPorRangoEdad(usuario));
 
     }
 }

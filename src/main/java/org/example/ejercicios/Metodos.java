@@ -6,13 +6,14 @@ public class Metodos {
 
     /**
      * Metodo que suma numeros impares
+     *
      * @param array coleccion de numeros de loc cuales solo se suma los impares
      * @return suma de numero impares
      */
-    public int sumarImpares(int[] array){
+    public int sumarImpares(int[] array) {
         int suma = 0;
-        for (int num : array){
-            if(num % 2 != 0){
+        for (int num : array) {
+            if (num % 2 != 0) {
                 suma += num;
             }
         }
@@ -20,11 +21,11 @@ public class Metodos {
     }
 
     // Ejercicio clasico de FizzBuzz
-    public List<String>fizzBuzz(){
+    public List<String> fizzBuzz() {
         List<String> resultado = new ArrayList<>();
 
-        for (int i = 1; i <=100 ; i++){
-            if(i% 3 == 0 && i % 5 == 0){
+        for (int i = 1; i <= 100; i++) {
+            if (i % 3 == 0 && i % 5 == 0) {
                 resultado.add("FizzBuzz");
             } else if (i % 3 == 0) {
                 resultado.add("Fizz");
@@ -41,11 +42,11 @@ public class Metodos {
     public char primerNoRepetido(String input) {
         Map<Character, Integer> map = new HashMap<>();
 
-        for (char c : input.toCharArray()){
+        for (char c : input.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
-        for (char c : input.toCharArray()){
-            if(map.get(c) == 1){
+        for (char c : input.toCharArray()) {
+            if (map.get(c) == 1) {
                 return c;
             }
         }
@@ -53,22 +54,22 @@ public class Metodos {
     }
 
     // Metodo para contar palabras de un String
-    public Map<String, Integer> contarPalabras(String input){
+    public Map<String, Integer> contarPalabras(String input) {
         Map<String, Integer> map = new HashMap<>();
         String[] palabras = input.split(" ");
-        for (String palabra : palabras){
+        for (String palabra : palabras) {
             map.put(palabra, map.getOrDefault(palabra, 0) + 1);
         }
         /*for (Map.Entry<String, Integer> entry : map.entrySet()){
             System.out.println(entry.getKey() + " " + entry.getValue());
         }*/
-       return map;
+        return map;
     }
 
     // Metodo para agrupar por longitud con computeifAbsent
-    public  Map<Integer, List<String>> agruparPorLongitud(List<String> lista){
+    public Map<Integer, List<String>> agruparPorLongitud(List<String> lista) {
         Map<Integer, List<String>> map = new HashMap<>();
-        for (String palabra : lista){
+        for (String palabra : lista) {
             int longitud = palabra.length();
             map.computeIfAbsent(longitud, k -> new ArrayList<>()).add(palabra);
         }
@@ -76,9 +77,9 @@ public class Metodos {
     }
 
     // Metodo para agrupar por longitud con constainskey
-    public Map<Integer, List<String>> agruparPorLongitud2(List<String> lista){
+    public Map<Integer, List<String>> agruparPorLongitud2(List<String> lista) {
         Map<Integer, List<String>> map = new HashMap<>();
-        for (String palabra : lista){
+        for (String palabra : lista) {
             int longitud = palabra.length();
 
             if (!map.containsKey(longitud)) {
@@ -86,14 +87,14 @@ public class Metodos {
             }
 
             map.get(longitud).add(palabra); // ahora sí agregamos la palabra a la lista
-        
+
         }
         return map;
     }
 
     // Agrupar anagramas con containsKey
-    public Map<String,List<String>> agruparAnagramas(List<String> lista){
-        Map<String,List<String>> map = new HashMap<>();
+    public Map<String, List<String>> agruparAnagramas(List<String> lista) {
+        Map<String, List<String>> map = new HashMap<>();
 
         for (String palabra : lista) {
             char[] letras = palabra.toCharArray();
@@ -111,7 +112,7 @@ public class Metodos {
     }
 
     // Agrupar anagramas con computeIfAbsent
-    public Map<String, List<String>> agruparPorAnagramas2(List<String> lista){
+    public Map<String, List<String>> agruparPorAnagramas2(List<String> lista) {
         Map<String, List<String>> map = new HashMap<>();
         for (String palabra : lista) {
             char[] letras = palabra.toCharArray();
@@ -124,8 +125,8 @@ public class Metodos {
     }
 
     // Metodo para agrupar lista de palabras por primer caracter
-    public Map<Character,List<String>> agruparPorPrimerCaracter(List<String> lista){
-        Map<Character, List<String>> mapa =  new HashMap<>();
+    public Map<Character, List<String>> agruparPorPrimerCaracter(List<String> lista) {
+        Map<Character, List<String>> mapa = new HashMap<>();
 
         for (String palabra : lista) {
             char caracter = Character.toLowerCase(palabra.charAt(0));
@@ -137,29 +138,49 @@ public class Metodos {
     }
 
     // Metodo para calcular precios por productos
-    public Map<String,Double> calcularGastosPorProductos(List<Compra> compras){
-        Map<String,Double> mapa = new HashMap<>();
-        for (Compra compra : compras){
+    public Map<String, Double> calcularGastosPorProductos(List<Compra> compras) {
+        Map<String, Double> mapa = new HashMap<>();
+        for (Compra compra : compras) {
             mapa.merge(compra.getNombre(), compra.getPrecio(), Double::sum);
         }
         return mapa;
     }
 
-    public Map<String, Double> calcularMontoPorProductos(List<Compra> compras){
-        Map<String,Double> mapa = new HashMap<>();
-        for (Compra compra : compras){
+    // Metodo para calcular monto por Producto con "contaniskey"
+    public Map<String, Double> calcularMontoPorProductos(List<Compra> compras) {
+        Map<String, Double> mapa = new HashMap<>();
+        for (Compra compra : compras) {
             String producto = compra.getNombre();
             double precio = compra.getPrecio();
 
-            if (mapa.containsKey(producto)){
+            if (mapa.containsKey(producto)) {
                 double totalActual = mapa.get(producto);
                 mapa.put(producto, totalActual + precio);
-            }else {
+            } else {
                 mapa.put(producto, precio);
             }
         }
         return mapa;
     }
+
+
+    public Map<String, List<String>> agruparPorRangoEdad(List<Usuario> usuarios) {
+        Map<String, List<String>> mapa = new HashMap<>();
+
+        for (Usuario usuario : usuarios) {
+            int edad = usuario.getEdad();
+            String nombre = usuario.getNombre();
+            if (edad < 18) {
+                mapa.computeIfAbsent("Menor", k -> new ArrayList<>()).add(nombre);
+            } else if (edad <= 60) {
+                mapa.computeIfAbsent("Adulto", k -> new ArrayList<>()).add(nombre);
+            } else {
+                mapa.computeIfAbsent("Mayor", k -> new ArrayList<>()).add(nombre);
+            }
+        }
+        return mapa;
+    }
+
 
 }
 
