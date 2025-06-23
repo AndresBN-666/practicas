@@ -2,6 +2,7 @@ package PruebaUnitariaMetodos;
 
 import org.example.ejercicios.Compra;
 import org.example.ejercicios.Metodos;
+import org.example.ejercicios.Usuario;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -112,5 +113,32 @@ public class TestMetodos {
         assertEquals(3.0, resultado.get("huevos"), 0.001);
 
     }
+/*
+
+    @Test
+    void testAgruparPorRangoEdad(){
+
+        Metodos metodos = new Metodos();
+
+        List<Usuario> usuario = List.of(
+                new Usuario("Ana", 15),
+                new Usuario("Luis", 25),
+                new Usuario("Pedro", 65),
+                new Usuario("Sofia", 12),
+                new Usuario("Carmen", 70)
+        );
+        Map<String, List<String>> resultado = metodos.agruparPorRangoEdad(usuario);
+        assertEquals(3, resultado.size());
+
+        assertTrue(resultado.containsKey("Menor"));
+        assertTrue(resultado.containsKey("Adulto"));
+        assertTrue(resultado.containsKey("Mayor"));
+
+        assertEquals(List.of("Ana", "Sofia"), resultado.get("Menor"));
+        assertEquals(List.of("Luis"), resultado.get("Adulto"));
+        assertEquals(List.of("Pedro", "Carmen"), resultado.get("Mayor"));
+
+    }
+*/
 
 }

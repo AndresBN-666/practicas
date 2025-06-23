@@ -2,12 +2,12 @@ package org.example.ejercicios;
 
 public class Usuario {
     private String nombre;
-    private int edad;
 
+    private String ciudad;
 
-    public Usuario(String nombre, int edad) {
+    public Usuario(String nombre, String ciudad) {
         this.nombre = nombre;
-        this.edad = edad;
+        this.ciudad = ciudad;
     }
 
     public String getNombre() {
@@ -18,11 +18,11 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public int getEdad() {
-        return edad;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 }

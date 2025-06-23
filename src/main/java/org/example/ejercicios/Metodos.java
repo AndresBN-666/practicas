@@ -164,7 +164,7 @@ public class Metodos {
     }
 
 
-    public Map<String, List<String>> agruparPorRangoEdad(List<Usuario> usuarios) {
+/*    public Map<String, List<String>> agruparPorRangoEdad(List<Usuario> usuarios) {
         Map<String, List<String>> mapa = new HashMap<>();
 
         for (Usuario usuario : usuarios) {
@@ -179,8 +179,120 @@ public class Metodos {
             }
         }
         return mapa;
+    }*/
+
+/*    public Map<String, String> obtenerUsuarioMasJovenPorUsuario(List<Usuario> usuarios) {
+        Map<String, Usuario> mapaTemporal = new HashMap<>();
+
+        for (Usuario usuario : usuarios) {
+
+            String ciudad = usuario.getCiudad();
+            if (!mapaTemporal.containsKey(ciudad) || usuario.getEdad() < mapaTemporal.get(ciudad).getEdad()) {
+                mapaTemporal.put(ciudad, usuario);
+            }
+        }
+
+        Map<String, String> resultadoFinal = new HashMap<>();
+
+        for (Map.Entry<String, Usuario> entry : mapaTemporal.entrySet()) {
+            resultadoFinal.put(entry.getKey(), entry.getValue().getNombre());
+        }
+
+
+        return resultadoFinal;
+    }*/
+
+    public Map<String, Boolean> verificarDuplicadosPorCurso(List<Estudiante> estudiantes) {
+        Map<String, Set<String>> nombresPorCurso = new HashMap<>();
+        Map<String, Boolean> resultado = new HashMap<>();
+
+        for (Estudiante estudiante : estudiantes) {
+            String nombre = estudiante.getNombre();
+            String curso = estudiante.getCurso();
+
+            nombresPorCurso.computeIfAbsent(curso, k -> new HashSet<>());
+
+            if (nombresPorCurso.get(curso).contains(nombre)) {
+                resultado.put(curso, true);
+            }else {
+                nombresPorCurso.get(curso).add(nombre);
+
+                resultado.put(curso, false);
+            }
+        }
+        return resultado;
     }
 
+
+    // Problemas del dia 1
+
+    public Map<Character, List<String>> agruparPorPrimeraLetra(List<String> palabras){
+        Map<Character, List<String>> mapa = new HashMap<>();
+        for (String palabra : palabras) {
+            char caracter = Character.toLowerCase(palabra.charAt(0));
+
+            mapa.computeIfAbsent(caracter, k -> new ArrayList<>()).add(palabra);
+        }
+        return mapa;
+    }
+
+    public Map<Character, List<String>> agruparPorPrimerCaracteres(List<String> palabras){
+        Map<Character, List<String>> mapa = new HashMap<>();
+        for (String palabra : palabras){
+            char caracter = Character.toLowerCase(palabra.charAt(0));
+            if (!mapa.containsKey(caracter)) {
+                mapa.put(caracter, new ArrayList<>());
+            }
+            mapa.get(caracter).add(palabra);
+        }
+        return mapa;
+    }
+
+    // Agrupar Por ciudad
+
+    public Map<String, List<String>> agruparPorCiudad(List<Usuario> usuarios) {
+        Map<String, List<String>> mapaTemporal = new HashMap<>();
+        for (Usuario usuario : usuarios){
+           // String ciudad = usuario.getCiudad();
+            mapaTemporal.computeIfAbsent(usuario.getCiudad(), k -> new ArrayList<>()).add(usuario.getNombre());
+        }
+        return mapaTemporal;
+    }
+
+    public Map<String, List<String>> agruparUsuPorCiudad(List<Usuario> usuarios) {
+        Map<String, List<String>> mapaTemporal = new HashMap<>();
+        for (Usuario usuario : usuarios){
+            String ciudad = usuario.getCiudad();
+            if (!mapaTemporal.containsKey(ciudad)){
+                mapaTemporal.put(ciudad, new ArrayList<>());
+            }
+            mapaTemporal.get(ciudad).add(usuario.getNombre());
+        }
+        return mapaTemporal;
+    }
+
+    // Agrupar Por Categoria
+
+    public Map<String, List<String>> agruparPorCategorias(List<Producto> productos){
+        Map<String, List<String>> map = new HashMap<>();
+        for (Producto producto : productos){
+            map.computeIfAbsent(producto.getTipo(), k -> new ArrayList<>()).add(producto.getNombre());
+        }
+        return map;
+    }
+
+    // Ejercicios dia 2
+
+    public Map<String, Integer> contarPalabrasTexto (String texto){
+        Map<String, Integer> mapa = new HashMap<>();
+        String[] palabras = texto.split(" ");
+        for(String palabra : palabras){
+            int contar = mapa.getOrDefault(palabra,0 );
+            mapa.put(palabra,contar+1);
+            //mapa.merge(palabra, 1, Integer::sum);
+        }
+        return mapa;
+    }
 
 }
 
