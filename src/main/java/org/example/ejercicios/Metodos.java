@@ -394,9 +394,10 @@ public class Metodos {
         }
         return resultado;
     }
-    public Map<String, Set<String>> agruparNombresUnicosPorCiudades(List<Usuario> usuarios){
+
+    public Map<String, Set<String>> agruparNombresUnicosPorCiudades(List<Usuario> usuarios) {
         Map<String, Set<String>> mapaTemporal = new HashMap<>();
-        for(Usuario usuario : usuarios){
+        for (Usuario usuario : usuarios) {
             mapaTemporal
                     .computeIfAbsent(usuario.getCiudad(), k -> new HashSet<>())
                     .add(usuario.getNombre());
@@ -404,7 +405,7 @@ public class Metodos {
         return mapaTemporal;
     }
 
-    public Map<Integer, Set<String>> agruparPalabrasUnicasPorLongitud(List<String> palabras){
+    public Map<Integer, Set<String>> agruparPalabrasUnicasPorLongitud(List<String> palabras) {
         Map<Integer, Set<String>> mapaTemporal = new HashMap<>();
         for (String palabra : palabras) {
             int longitud = palabra.length();
@@ -416,17 +417,35 @@ public class Metodos {
     }
 
 
-    public Map<String, List<String>> agruparNombresPorTipoConPrecioMayorA50(List<Producto> productos){
+    public Map<String, List<String>> agruparNombresPorTipoConPrecioMayorA50(List<Producto> productos) {
         Map<String, List<String>> mapaTemporal = new HashMap<>();
         for (Producto producto : productos) {
             double precio = producto.getPrecio();
 
-            if (precio>50){
+            if (precio > 50) {
                 mapaTemporal
                         .computeIfAbsent(producto.getTipo(), k -> new ArrayList<>())
                         .add(producto.getNombre());
             }
 
+        }
+        return mapaTemporal;
+    }
+
+    public Map<String, List<String>> agruparProductosUnicosPorTipo(List<Producto> productos) {
+
+        Set<String> nombresAgregados = new HashSet<>();
+        Map<String, List<String>> mapaTemporal = new HashMap<>();
+        for (Producto producto : productos) {
+            String productoNombre = producto.getNombre();
+            double precio = producto.getPrecio();
+
+            if (precio > 40 && !nombresAgregados.contains(productoNombre)) {
+                nombresAgregados.add(productoNombre);
+                mapaTemporal
+                        .computeIfAbsent(producto.getTipo(), k -> new ArrayList<>())
+                        .add(productoNombre);
+            }
         }
         return mapaTemporal;
     }

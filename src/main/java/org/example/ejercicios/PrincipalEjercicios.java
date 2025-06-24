@@ -35,17 +35,19 @@ public class PrincipalEjercicios {
 
         List<Producto> producto = List.of(
                 new Producto("Sábana", "Dormitorio", 60.0),
-                new Producto("Colcha", "Dormitorio", 45.0),
-                new Producto("Funda", "Dormitorio", 25.0),
+                new Producto("Sábana", "Hogar", 80.0),         // 👈 duplicado global: NO se agrega
+                new Producto("Colcha", "Dormitorio", 30.0),    // precio < 40: NO se agrega
+                new Producto("Almohada", "Dormitorio", 55.0),
                 new Producto("Escritorio", "Oficina", 120.0),
-                new Producto("Silla", "Oficina", 49.9),
-                new Producto("Almohada", "Dormitorio", 55.0)
+                new Producto("Silla", "Oficina", 90.0),
+                new Producto("Silla", "Casa", 95.0),           // 👈 duplicado global: NO se agrega
+                new Producto("Funda", "Dormitorio", 25.0)      // precio < 40: NO se agrega
         );
         List<String> palabras = List.of(
                 "java", "html", "css", "spring", "java", "html", "c", "go", "springboot"
         );
 
-        System.out.println(metodos.agruparNombresPorTipoConPrecioMayorA50(producto));
+        System.out.println(metodos.agruparProductosUnicosPorTipo(producto));
 
     }
 }
