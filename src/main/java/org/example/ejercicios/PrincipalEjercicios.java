@@ -7,7 +7,7 @@ import java.util.List;
 public class PrincipalEjercicios {
     public static void main(String[] args) {
         Metodos metodos = new Metodos();
-        List<String> palabras = Arrays.asList("Sol", "Silla", "Río", "Rana", "Perro", "Pez");
+
         List<Compra> compras = List.of(
                 new Compra("pan",1.5),
                 new Compra("leche",2.0),
@@ -16,12 +16,12 @@ public class PrincipalEjercicios {
                 new Compra("leche", 1.8)
         );
         List<Usuario> usuario = List.of(
-                new Usuario("Ana", "Lima"),
-                new Usuario("Luis",  "Arequipa"),
-                new Usuario("Pedro",  "Lima"),
-                new Usuario("Sofia", "Cusco"),
-                new Usuario("Lucia",  "Cusco"),
-                new Usuario("Diego",  "Arequipa")
+                new Usuario("Ana", "Lima", 25),
+                new Usuario("Luis", "Lima", 30),
+                new Usuario("Ana", "Lima", 40),
+                new Usuario("Carmen", "Arequipa", 50),
+                new Usuario("Pedro", "Lima", 35),
+                new Usuario("Carmen", "Arequipa", 60)
         );
 
         List<Estudiante> estudiante = List.of(
@@ -34,14 +34,18 @@ public class PrincipalEjercicios {
         );
 
         List<Producto> producto = List.of(
-                new Producto("Cama", "Dormitorio"),
-                new Producto("Sabanas", "Dormitorio"),
-                new Producto("Licuadora", "Cocina"),
-                new Producto("ollas", "Cocina"),
-                new Producto("Toalla", "Baño")
+                new Producto("Sábana", "Dormitorio", 60.0),
+                new Producto("Colcha", "Dormitorio", 45.0),
+                new Producto("Funda", "Dormitorio", 25.0),
+                new Producto("Escritorio", "Oficina", 120.0),
+                new Producto("Silla", "Oficina", 49.9),
+                new Producto("Almohada", "Dormitorio", 55.0)
+        );
+        List<String> palabras = List.of(
+                "java", "html", "css", "spring", "java", "html", "c", "go", "springboot"
         );
 
-        System.out.println(metodos.contarPalabrasTexto("hola mundo hola java mundo hola"));
+        System.out.println(metodos.agruparNombresPorTipoConPrecioMayorA50(producto));
 
     }
 }

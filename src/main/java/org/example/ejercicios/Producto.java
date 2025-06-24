@@ -3,6 +3,13 @@ package org.example.ejercicios;
 public class Producto {
     private String nombre;
     private String tipo;
+    private double precio;
+
+    public Producto(String nombre, String tipo, double precio) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.precio = precio;
+    }
 
     public Producto(String nombre, String tipo) {
         this.nombre = nombre;
@@ -23,5 +30,13 @@ public class Producto {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 }

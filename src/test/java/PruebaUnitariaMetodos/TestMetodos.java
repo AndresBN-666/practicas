@@ -141,4 +141,24 @@ public class TestMetodos {
     }
 */
 
+    @Test
+    void contarUsuariosPorCiudad(){
+        Metodos metodos = new Metodos();
+
+        List<Usuario> usuario = List.of(
+                new Usuario("Ana", "Lima"),
+                new Usuario("Luis", "Cusco"),
+                new Usuario("Pedro", "Lima"),
+                new Usuario("Carla", "Cusco"),
+                new Usuario("María", "Piura")
+        );
+
+        Map<String, Integer> resultado = metodos.contarUsuariosPorCiudadCorrespondiente(usuario);
+        assertEquals(3, resultado.size());
+        assertEquals(2, resultado.get("Lima"));
+        assertEquals(2, resultado.get("Cusco"));
+        assertEquals(1, resultado.get("Piura"));
+
+    }
+
 }

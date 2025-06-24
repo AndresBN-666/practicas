@@ -214,7 +214,7 @@ public class Metodos {
 
             if (nombresPorCurso.get(curso).contains(nombre)) {
                 resultado.put(curso, true);
-            }else {
+            } else {
                 nombresPorCurso.get(curso).add(nombre);
 
                 resultado.put(curso, false);
@@ -226,7 +226,7 @@ public class Metodos {
 
     // Problemas del dia 1
 
-    public Map<Character, List<String>> agruparPorPrimeraLetra(List<String> palabras){
+    public Map<Character, List<String>> agruparPorPrimeraLetra(List<String> palabras) {
         Map<Character, List<String>> mapa = new HashMap<>();
         for (String palabra : palabras) {
             char caracter = Character.toLowerCase(palabra.charAt(0));
@@ -236,9 +236,9 @@ public class Metodos {
         return mapa;
     }
 
-    public Map<Character, List<String>> agruparPorPrimerCaracteres(List<String> palabras){
+    public Map<Character, List<String>> agruparPorPrimerCaracteres(List<String> palabras) {
         Map<Character, List<String>> mapa = new HashMap<>();
-        for (String palabra : palabras){
+        for (String palabra : palabras) {
             char caracter = Character.toLowerCase(palabra.charAt(0));
             if (!mapa.containsKey(caracter)) {
                 mapa.put(caracter, new ArrayList<>());
@@ -252,8 +252,8 @@ public class Metodos {
 
     public Map<String, List<String>> agruparPorCiudad(List<Usuario> usuarios) {
         Map<String, List<String>> mapaTemporal = new HashMap<>();
-        for (Usuario usuario : usuarios){
-           // String ciudad = usuario.getCiudad();
+        for (Usuario usuario : usuarios) {
+            // String ciudad = usuario.getCiudad();
             mapaTemporal.computeIfAbsent(usuario.getCiudad(), k -> new ArrayList<>()).add(usuario.getNombre());
         }
         return mapaTemporal;
@@ -261,9 +261,9 @@ public class Metodos {
 
     public Map<String, List<String>> agruparUsuPorCiudad(List<Usuario> usuarios) {
         Map<String, List<String>> mapaTemporal = new HashMap<>();
-        for (Usuario usuario : usuarios){
+        for (Usuario usuario : usuarios) {
             String ciudad = usuario.getCiudad();
-            if (!mapaTemporal.containsKey(ciudad)){
+            if (!mapaTemporal.containsKey(ciudad)) {
                 mapaTemporal.put(ciudad, new ArrayList<>());
             }
             mapaTemporal.get(ciudad).add(usuario.getNombre());
@@ -273,9 +273,9 @@ public class Metodos {
 
     // Agrupar Por Categoria
 
-    public Map<String, List<String>> agruparPorCategorias(List<Producto> productos){
+    public Map<String, List<String>> agruparPorCategorias(List<Producto> productos) {
         Map<String, List<String>> map = new HashMap<>();
-        for (Producto producto : productos){
+        for (Producto producto : productos) {
             map.computeIfAbsent(producto.getTipo(), k -> new ArrayList<>()).add(producto.getNombre());
         }
         return map;
@@ -283,15 +283,152 @@ public class Metodos {
 
     // Ejercicios dia 2
 
-    public Map<String, Integer> contarPalabrasTexto (String texto){
+    public Map<String, Integer> contarPalabrasTexto(String texto) {
         Map<String, Integer> mapa = new HashMap<>();
         String[] palabras = texto.split(" ");
-        for(String palabra : palabras){
-            int contar = mapa.getOrDefault(palabra,0 );
-            mapa.put(palabra,contar+1);
+        for (String palabra : palabras) {
+            int contar = mapa.getOrDefault(palabra, 0);
+            mapa.put(palabra, contar + 1);
             //mapa.merge(palabra, 1, Integer::sum);
         }
         return mapa;
+    }
+
+    //contar usuarios por ciudad
+    public Map<String, Integer> contarUsuariosPorCiudadCorrespondiente(List<Usuario> usuarios) {
+        Map<String, Integer> mapaTemporal = new HashMap<>();
+        for (Usuario usuario : usuarios) {
+            mapaTemporal.merge(usuario.getCiudad(), 1, Integer::sum);
+
+        }
+        return mapaTemporal;
+    }
+
+    // contar productos por categorias
+    public Map<String, Integer> contarProductoPorCategorias(List<Producto> productos) {
+        Map<String, Integer> mapaTemporal = new HashMap<>();
+        for (Producto producto : productos) {
+            mapaTemporal.merge(producto.getTipo(), 1, Integer::sum);
+        }
+        return mapaTemporal;
+
+    }
+
+    // Agrupar por ciudad
+    public Map<String, Set<String>> agruparNombresUnicosPorCiudad(List<Usuario> usuarios) {
+        Map<String, Set<String>> mapaTemporal = new HashMap<>();
+        for (Usuario usuario : usuarios) {
+            mapaTemporal
+                    .computeIfAbsent(usuario.getCiudad(), k -> new HashSet<>())
+                    .add(usuario.getNombre());
+        }
+        return mapaTemporal;
+    }
+
+    public Map<String, Set<String>> agruparCategoriasPorProducto(List<Producto> productos) {
+        Map<String, Set<String>> mapaTemporal = new HashMap<>();
+        for (Producto producto : productos) {
+            mapaTemporal
+                    .computeIfAbsent(producto.getNombre(), k -> new HashSet<>())
+                    .add(producto.getTipo());
+        }
+        return mapaTemporal;
+    }
+
+    public Map<String, Set<String>> agruparProductosPorCategoria(List<Producto> productos) {
+        Map<String, Set<String>> mapaTemporal = new HashMap<>();
+        for (Producto producto : productos) {
+            mapaTemporal
+                    .computeIfAbsent(producto.getTipo(), k -> new HashSet<>())
+                    .add(producto.getNombre());
+        }
+        return mapaTemporal;
+    }
+
+    // Dia 4
+
+    // Calcular promedio por tipo de producto
+    public Map<String, Double> calcularPrecioPromedioPorTipo(List<Producto> productos) {
+        Map<String, Double> resultado = new HashMap<>();
+        Map<String, List<Double>> precios = new HashMap<>();
+        for (Producto producto : productos) {
+            precios
+                    .computeIfAbsent(producto.getTipo(), k -> new ArrayList<>())
+                    .add(producto.getPrecio());
+        }
+
+
+        for (Map.Entry<String, List<Double>> entry : precios.entrySet()) {
+            String tipo = entry.getKey();
+            List<Double> precio = entry.getValue();
+
+            double suma = 0;
+            for (double p : precio) {
+                suma += p;
+            }
+            double promedio = suma / precio.size();
+            resultado.put(tipo, promedio);
+
+        }
+
+        return resultado;
+    }
+
+    public Map<String, Double> calcularPromedioEdadPorCiudad(List<Usuario> usuarios) {
+        Map<String, double[]> acumulador = new HashMap<>();
+
+        for (Usuario usuario : usuarios) {
+            acumulador
+                    .computeIfAbsent(usuario.getCiudad(), k -> new double[2]);
+            double[] datos = acumulador.get(usuario.getCiudad());
+            datos[0] += usuario.getEdad();
+            datos[1] += 1;
+        }
+
+        Map<String, Double> resultado = new HashMap<>();
+        for (Map.Entry<String, double[]> entry : acumulador.entrySet()) {
+            String ciudad = entry.getKey();
+            double[] datos = entry.getValue();
+            double promedio = datos[0] / datos[1];
+            resultado.put(ciudad, promedio);
+        }
+        return resultado;
+    }
+    public Map<String, Set<String>> agruparNombresUnicosPorCiudades(List<Usuario> usuarios){
+        Map<String, Set<String>> mapaTemporal = new HashMap<>();
+        for(Usuario usuario : usuarios){
+            mapaTemporal
+                    .computeIfAbsent(usuario.getCiudad(), k -> new HashSet<>())
+                    .add(usuario.getNombre());
+        }
+        return mapaTemporal;
+    }
+
+    public Map<Integer, Set<String>> agruparPalabrasUnicasPorLongitud(List<String> palabras){
+        Map<Integer, Set<String>> mapaTemporal = new HashMap<>();
+        for (String palabra : palabras) {
+            int longitud = palabra.length();
+            mapaTemporal
+                    .computeIfAbsent(longitud, k -> new HashSet<>())
+                    .add(palabra);
+        }
+        return mapaTemporal;
+    }
+
+
+    public Map<String, List<String>> agruparNombresPorTipoConPrecioMayorA50(List<Producto> productos){
+        Map<String, List<String>> mapaTemporal = new HashMap<>();
+        for (Producto producto : productos) {
+            double precio = producto.getPrecio();
+
+            if (precio>50){
+                mapaTemporal
+                        .computeIfAbsent(producto.getTipo(), k -> new ArrayList<>())
+                        .add(producto.getNombre());
+            }
+
+        }
+        return mapaTemporal;
     }
 
 }
