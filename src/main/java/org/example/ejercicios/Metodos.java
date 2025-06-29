@@ -450,5 +450,70 @@ public class Metodos {
         return mapaTemporal;
     }
 
+
+    public Map<String, Double> calcularPromedioPorTipoConMinimo(List<Producto> productos) {
+        Map<String, double[]> acumulador = new HashMap<>();
+        for (Producto producto : productos) {
+            double precio = producto.getPrecio();
+            if (precio > 50) {
+                acumulador
+                        .computeIfAbsent(producto.getTipo(), k -> new double[2]);
+                double[] datos = acumulador.get(producto.getTipo());
+                datos[0] += producto.getPrecio();
+                datos[1] += 1;
+            }
+        }
+
+        Map<String, Double> resultado = new HashMap<>();
+        for (Map.Entry<String, double[]> entry : acumulador.entrySet()) {
+            String tipo = entry.getKey();
+            double[] datos = entry.getValue();
+            double promedio = datos[0] / datos[1];
+            resultado.put(tipo, promedio);
+        }
+        return resultado;
+    }
+
+    public Map<String, Map<String, List<String>>> agruparUsuariosPorCiudadYEdad(List<Usuario> usuarios) {
+
+        Map<String, Map<String, List<String>>> resultado = new HashMap<>();
+
+        Map<String, List<String>> edades = new HashMap<>();
+        for (Usuario usuario : usuarios) {
+            String ciudad = usuario.getCiudad();
+            String clasificacion = clasificarEdad(usuario.getEdad());
+
+            Map<String, List<String>> clasificacionesPorCiudad = resultado
+                    .computeIfAbsent(ciudad, k -> new HashMap<>());
+
+            clasificacionesPorCiudad
+                    .computeIfAbsent(clasificacion, k -> new ArrayList<>())
+                    .add(usuario.getNombre());
+
+        }
+        return resultado;
+
+
+    }
+
+    private String clasificarEdad(int edad) {
+        if (edad < 18) return "Menor";
+        else if (edad < 60) return "Adulto";
+        else return "Mayor";
+    }
+
+    public Map<String, Map<String, Double>> calcularGastoPorCiudadYCategoria(List<Compra> compras) {
+        Map<String, Map<String, Double>> resultado = new HashMap<>();
+        for (Compra compra : compras) {
+            double precio = compra.getMonto();
+            Map<String, Double> gastoPorCategoria = resultado
+                    .computeIfAbsent(compra.getCiudad(), k -> new HashMap<>());
+
+            gastoPorCategoria.merge(compra.getCategoria(), precio, Double::sum);
+        }
+        return resultado;
+    }
+
+
 }
 
