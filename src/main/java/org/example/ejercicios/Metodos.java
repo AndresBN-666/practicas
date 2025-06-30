@@ -514,6 +514,62 @@ public class Metodos {
         return resultado;
     }
 
+    public Map<String, Map<String, Double>> calcularPromedioPorCiudadYTipo(List<Producto> productos) {
+        Map<String, Map<String, List<Double>>> agrupados  = new HashMap<>();
+
+        for (Producto producto : productos) {
+            String tipo = producto.getTipo();
+            double precio = producto.getPrecio();
+            String ciudad = producto.getCiudad();
+
+            if (precio > 100) {
+                agrupados
+                        .computeIfAbsent(ciudad, k -> new HashMap<>())
+                        .computeIfAbsent(tipo, t -> new ArrayList<>())
+                        .add(precio);
+            }
+        }
+
+        Map<String, Map<String, Double>> resultado = new HashMap<>();
+        for (Map.Entry<String, Map<String, List<Double>>> entryCiudad  : agrupados.entrySet()) {
+            String ciudad = entryCiudad .getKey();
+            Map<String, List<Double>> tipos = entryCiudad.getValue();
+
+            // promedios por tipo
+            Map<String, Double> promedioPorTipo = new HashMap<>();
+            for (Map.Entry<String, List<Double>> entryTipo : tipos.entrySet()) {
+                String tipo = entryTipo.getKey();
+                List<Double> precios = entryTipo.getValue();
+
+                double suma = 0;
+                for (double precio : precios) {
+                    suma += precio;
+                }
+                double promedio = suma / precios.size();
+                promedioPorTipo.put(tipo, promedio);
+            }
+            resultado.put(ciudad, promedioPorTipo);
+         }
+
+        return resultado;
+
+
+    }
+
+    public Map<String, Map<String, Set<String>>> agruparProductosUnicosPorCiudadYTipo(List<Producto> productos){
+        Map<String, Map<String, Set<String>>> resultado = new HashMap<>();
+        for (Producto producto : productos) {
+            String ciudad = producto.getCiudad();
+            String tipo = producto.getTipo();
+            String nombre = producto.getNombre();
+            resultado
+                    .computeIfAbsent(ciudad, k -> new HashMap<>())
+                    .computeIfAbsent(tipo, t -> new HashSet<>())
+                    .add(nombre);
+        }
+        return resultado;
+    }
+
 
 }
 

@@ -4,6 +4,14 @@ public class Producto {
     private String nombre;
     private String tipo;
     private double precio;
+    private String ciudad;
+
+    public Producto(String nombre, String tipo, double precio, String ciudad) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.precio = precio;
+        this.ciudad = ciudad;
+    }
 
     public Producto(String nombre, String tipo, double precio) {
         this.nombre = nombre;
@@ -38,5 +46,13 @@ public class Producto {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 }
